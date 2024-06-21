@@ -1,0 +1,17 @@
+.grid-img {
+    width: 55px;
+    height: 55px;
+}
+
+.results {
+    border: 4px solid black;
+    padding: 4px;
+}
+
+.grid td{
+    border: 4px solid black;
+    padding: 5px;
+    margin: 4px;
+    width: 60px;
+    height: 60px;
+}
