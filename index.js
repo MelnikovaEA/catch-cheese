@@ -1,16 +1,10 @@
 import {appComponent} from "./ui/components/AppComponent.js";
-import {subscribe} from "./core/state.js";
 
 const rootElement = document.getElementById('root');
 
-const renderApp = () => {
-    rootElement.innerHTML = '';
+rootElement.innerHTML = '';
 
-    const appElement = appComponent();
+const appElement = appComponent();
 
-    rootElement.append(appElement);
-}
+rootElement.append(appElement);
 
-renderApp();
-
-subscribe(renderApp);

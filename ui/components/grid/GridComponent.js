@@ -1,17 +1,32 @@
-import {getGridSettings} from "../../../core/state.js";
+import {getGridSettings, subscribe, unsubscribe} from "../../../core/state.js";
 import {cellComponent} from "./cell/CellComponent.js";
 
 export const gridComponent = () => {
 
+    console.log('GRID CREATED')
+
     const element = document.createElement('table');
     element.classList.add('grid');
 
-    createGrid(element);
+    const observer = () => {
+        render(element)
+    }
 
-    return {element};
+    subscribe(observer);
+
+    render(element);
+
+    return {element, cleanup: () => {
+        console.log('GRID CLEANUP CALLED')
+        unsubscribe(observer)
+    }};
 }
 
-const createGrid = async (el) => {
+const render = async (el) => {
+
+    console.log('GRID RENDER');
+
+    el.innerHTML = '';
 
     const settings = await getGridSettings();
 
