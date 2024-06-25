@@ -8,9 +8,20 @@ export const cellComponent = (x, y) => {
 
     const element = document.createElement('td');
 
+    const observer = () => {
+        render(element, x, y)
+    }
+
+    subscribe(observer);
+
     render(element, x, y);
 
-    return {element};
+    return {
+        element, cleanup: () => {
+            console.log(`Cleanup for cell ${x}, ${y}`);
+            unsubscribe(observer);
+        }
+    };
 }
 
 const render = async (el, x, y) => {
@@ -21,15 +32,15 @@ const render = async (el, x, y) => {
     const player1Position = await getPlayerPosition(1);
     const player2Position = await getPlayerPosition(2);
 
-    if(x === cheesePosition.x && y === cheesePosition.y) {
+    if (x === cheesePosition.x && y === cheesePosition.y) {
         el.append(cheeseComponent().element);
     }
 
-    if(x === player1Position.x && y === player1Position.y) {
+    if (x === player1Position.x && y === player1Position.y) {
         el.append(playerComponent(1).element);
     }
 
-    if(x === player2Position.x && y === player2Position.y) {
+    if (x === player2Position.x && y === player2Position.y) {
         el.append(playerComponent(2).element);
     }
 
