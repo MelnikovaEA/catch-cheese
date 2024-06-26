@@ -1,4 +1,5 @@
 import {getCheesePoints, getPlayerPoints, subscribe, unsubscribe} from "../../../core/state.js";
+import {EVENTS} from "../../../core/constants.js";
 
 export const resultPanelComponent = () => {
 
@@ -6,8 +7,8 @@ export const resultPanelComponent = () => {
     const element = document.createElement('div');
     element.classList.add('results');
 
-    const observer = () => {
-        render(element)
+    const observer = (e) => {
+        if (e.name === EVENTS.SCORES_CHANGED) render(element)
     }
 
     subscribe(observer);

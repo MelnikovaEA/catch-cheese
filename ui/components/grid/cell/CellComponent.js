@@ -1,36 +1,50 @@
 import {getCheesePosition, getPlayerPosition, subscribe, unsubscribe} from "../../../../core/state.js";
 import {cheeseComponent} from "../../common/cheeseComponent.js";
 import {playerComponent} from "../../common/playerComponent.js";
+import {EVENTS} from "../../../../core/constants.js";
 
 export const cellComponent = (x, y) => {
 
-    //console.log(`CELL ${x} ${y} CREATED`);
+    const localState = {renderingVersion: 0}
 
     const element = document.createElement('td');
 
-    const observer = () => {
-        render(element, x, y)
+    const observer = (e) => {
+        if(e.name !== EVENTS.CHEESE_JUMPED && e.name !== EVENTS.PLAYER1_MOVED && e.name !== EVENTS.PLAYER2_MOVED) return;
+
+        if(e.payload.prevPosition.x === x && e.payload.prevPosition.y === y){
+            element.style.backgroundColor = 'red';
+            render(element, x, y, localState);
+        }
+
+        if(e.payload.position.x === x && e.payload.position.y === y){
+            element.style.backgroundColor = 'blue';
+            render(element, x, y, localState);
+        }
     }
 
     subscribe(observer);
 
-    render(element, x, y);
+    render(element, x, y, localState);
 
     return {
         element, cleanup: () => {
-            console.log(`Cleanup for cell ${x}, ${y}`);
             unsubscribe(observer);
         }
     };
 }
 
-const render = async (el, x, y) => {
-    //console.log(`CELL ${x} ${y} RENDERING`)
+const render = async (el, x, y, localState) => {
+    localState.renderingVersion++;
+    const currentRenderingVersion = localState.renderingVersion;
+
     el.innerHTML = '';
 
     const cheesePosition = await getCheesePosition();
     const player1Position = await getPlayerPosition(1);
     const player2Position = await getPlayerPosition(2);
+
+    if(currentRenderingVersion < localState.renderingVersion) return;
 
     if (x === cheesePosition.x && y === cheesePosition.y) {
         el.append(cheeseComponent().element);

@@ -4,13 +4,18 @@ import {settingsComponent} from "./settings/SettingsComponent.js";
 import {getGameStatus, subscribe} from "../../core/state.js";
 import {startComponent} from "./startComponent/startComponent.js";
 import {looseComponent} from "./loose/looseComponent.js";
+import {winComponent} from "./win/winComponent.js";
 import {GAME_STATUSES} from "../../core/constants.js";
+import {audioComponent} from "../audio/audioComponent.js";
 
 export const appComponent = () => {
     console.log('APP CREATED');
     let localState = {prevState: null, cleanupFunctions: []}
 
     const element = document.createElement('div');
+
+    const audio = audioComponent();
+
 
     render(element, localState);
 
@@ -52,6 +57,12 @@ const render = async (el, localState) => {
             localState.cleanupFunctions.push(gridElement.cleanup);
 
             el.append(settingsElement.element, pointsElement.element, gridElement.element);
+
+            break
+        }
+        case GAME_STATUSES.WIN: {
+            const winElement = winComponent();
+            el.append(winElement.element);
 
             break
         }
