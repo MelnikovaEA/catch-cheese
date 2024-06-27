@@ -42,7 +42,9 @@ const render = async (el, localState) => {
     switch (gameStatus) {
         case GAME_STATUSES.SETTINGS: {
             const settingsElement = settingsComponent();
+            localState.cleanupFunctions.push(settingsElement.cleanup);
             const startElement = startComponent();
+            //localState.cleanupFunctions.push(startElement.cleanup);
 
             el.append(settingsElement.element,startElement.element);
 

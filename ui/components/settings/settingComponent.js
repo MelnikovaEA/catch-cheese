@@ -1,4 +1,10 @@
-import {setSettings, subscribe, unsubscribe} from "../../../core/state.js";
+import {
+    getGridSettings, getPointsToLoose,
+    getPointsToWin,
+    setSettings,
+    subscribe,
+    unsubscribe
+} from "../../../core/state.js";
 import {EVENTS} from "../../../core/constants.js";
 
 export const settingComponent = (settings) => {
@@ -25,14 +31,28 @@ export const settingComponent = (settings) => {
 const render = async (el, settings) => {
 
     el.innerHTML = '';
+
     console.log('setting element rendering');
+
     const title = document.createElement('h4');
     title.innerText = settings.title;
     el.append(title);
 
     const button = document.createElement('button');
-    button.classList.add('setting-component__button')
-    button.textContent = settings.options[0];
+    button.classList.add('setting-component__button');
+    const buttonText = async () => {
+        if(settings.title === 'Grid options'){
+            const data = await getGridSettings();
+            return `${data.rowsCount} x ${data.columnCount}`
+        }
+        if(settings.title === 'Points to win'){
+            return await getPointsToWin()
+        }
+        if(settings.title === 'Points to loose'){
+            return await getPointsToLoose()
+        }
+    }
+    button.textContent = await buttonText();
     el.append(button);
 
     const list = document.createElement('div');

@@ -2,8 +2,6 @@
     display: flex;
 }
 
-
-
 .setting-component {
     position: relative;
     display: inline-block;
@@ -37,6 +35,11 @@
 
 .setting-component__list.show {
     display: block;
+}
+
+.disabled {
+    opacity: 50%;
+    pointer-events: none;
 }
 
 .grid-img {

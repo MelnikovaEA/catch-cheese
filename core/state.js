@@ -12,7 +12,7 @@ const _state = {
             columnCount: 5
         },
         pointsToWin: 5,
-        pointsToLoose: 4,
+        pointsToLoose: 5,
     },
     positions: {
         cheesePosition: {x: 1, y: 1},
@@ -155,6 +155,14 @@ export const getPlayerPosition = async (playerNumber) => {
     const playerIndex = _getPlayerIndex(playerNumber);
 
     return {..._state.positions.playersPosition[playerIndex]}
+}
+
+export const getPointsToWin = async () => {
+    return _state.settings.pointsToWin;
+}
+
+export const getPointsToLoose= async () => {
+    return _state.settings.pointsToLoose;
 }
 
 //COMMANDS
