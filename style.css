@@ -1,3 +1,44 @@
+.settings-component {
+    display: flex;
+}
+
+
+
+.setting-component {
+    position: relative;
+    display: inline-block;
+    min-width: 200px;
+}
+
+.setting-component__button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.setting-component__list {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+.setting-component__field {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.setting-component__list.show {
+    display: block;
+}
+
 .grid-img {
     width: 55px;
     height: 55px;

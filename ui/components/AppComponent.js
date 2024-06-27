@@ -16,7 +16,6 @@ export const appComponent = () => {
 
     const audio = audioComponent();
 
-
     render(element, localState);
 
     subscribe(() => {
@@ -45,18 +44,19 @@ const render = async (el, localState) => {
             const settingsElement = settingsComponent();
             const startElement = startComponent();
 
-            el.append(settingsElement.element, startElement.element);
+            el.append(settingsElement.element,startElement.element);
 
             break
         }
         case GAME_STATUSES.IN_PROGRESS: {
             const settingsElement = settingsComponent();
+            localState.cleanupFunctions.push(settingsElement.cleanup);
             const pointsElement = resultPanelComponent();
             localState.cleanupFunctions.push(pointsElement.cleanup);
             const gridElement = gridComponent();
             localState.cleanupFunctions.push(gridElement.cleanup);
 
-            el.append(settingsElement.element, pointsElement.element, gridElement.element);
+            el.append(settingsElement.element,pointsElement.element, gridElement.element);
 
             break
         }

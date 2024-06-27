@@ -159,6 +159,26 @@ export const getPlayerPosition = async (playerNumber) => {
 
 //COMMANDS
 
+export const setSettings = async (title, value) => {
+    switch (title) {
+        case 'Grid options':
+            const newSize = {..._state.settings.grid};
+            const options = value.match(/\d+/g);
+            newSize.rowsCount = options[0];
+            newSize.columnCount = options[1];
+            console.log(newSize);
+            _state.settings.grid = {...newSize};
+            break;
+        case 'Points to win':
+            _state.settings.pointsToWin = value;
+            break;
+        case 'Points to loose':
+            _state.settings.pointsToLoose = value;
+            break;
+        default: return;
+    }
+}
+
 export const start = async () => {
     if (_state.game_status !== GAME_STATUSES.SETTINGS) throw new Error('Incorrect transition');
 
@@ -194,6 +214,7 @@ export const start = async () => {
     }, _state.settings.googleJumpInterval);
 
     _state.game_status = GAME_STATUSES.IN_PROGRESS;
+    _notifyObservers(EVENTS.GAME_STARTED);
     _notifyObservers(EVENTS.STATUS_CHANGED);
 }
 

@@ -1,14 +1,25 @@
+import {settingComponent} from "./settingComponent.js";
+import {gameOptions} from "../../../core/gameOptions.js";
+
 export const settingsComponent = () => {
 
     const element = document.createElement('div');
+    element.classList.add('settings-component');
 
     render(element);
 
-    return {element};//возвращается обект со свойством {element(ключ): element(созданный в начале
-    // функции div)}, это нужно из-за того, что асинхронная функция render возвращает промис, а ппромис
-    // это объект в данном случае со свойством element: element
+    return {element,
+        cleanup: () => { }
+    };
 }
 
 const render = async (el) => {
-    el.append('Settings will be here');
+    el.innerHTML = '';
+
+    const gridSizeSettingsElement = await settingComponent(gameOptions.gridOptions);
+    const pointsToWinSettingsElement = await settingComponent(gameOptions.pointsToWinOptions);
+    const pointsToLooseSettingsElement = await settingComponent(gameOptions.pointsToLooseOptions);
+
+    el.append(gridSizeSettingsElement.element, pointsToWinSettingsElement.element, pointsToLooseSettingsElement.element);
+console.log(el.innerHTML)
 }
