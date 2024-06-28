@@ -6,7 +6,7 @@ const _state = {
         /**
          * in milliseconds
          */
-        googleJumpInterval: 40000,
+        googleJumpInterval: 3000,
         grid: {
             rowsCount: 5,
             columnCount: 5
@@ -161,8 +161,12 @@ export const getPointsToWin = async () => {
     return _state.settings.pointsToWin;
 }
 
-export const getPointsToLoose= async () => {
+export const getPointsToLoose = async () => {
     return _state.settings.pointsToLoose;
+}
+
+export const getPlayersCount = async () => {
+    return _state.points.players.length;
 }
 
 //COMMANDS

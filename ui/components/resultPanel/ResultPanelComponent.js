@@ -1,5 +1,7 @@
-import {getCheesePoints, getPlayerPoints, subscribe, unsubscribe} from "../../../core/state.js";
+import {getPlayersCount, subscribe, unsubscribe} from "../../../core/state.js";
 import {EVENTS} from "../../../core/constants.js";
+import {resultCheeseComponent} from "./resultCheeseComponent.js";
+import {resultPlayerComponent} from "./resultPlayerComponent.js";
 
 export const resultPanelComponent = () => {
 
@@ -20,11 +22,12 @@ export const resultPanelComponent = () => {
 
 const render = async (el) => {
     console.log('POINTS RENDER')
+    const playersCount = await getPlayersCount();
     el.innerHTML = '';
 
-    const cheesePoints = await getCheesePoints();
-    const player1Points = await getPlayerPoints(1);
-    const player2Points = await getPlayerPoints(2);
-
-    el.append(`Cheese: ${cheesePoints}, Player 1: ${player1Points}, Player 2: ${player2Points}`);
+    el.append(resultCheeseComponent().element);
+    for (let i = 1; i <= playersCount; i++) {
+        console.log(playersCount)
+        el.append(resultPlayerComponent(i).element);
+    }
 }
