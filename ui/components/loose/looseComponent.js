@@ -10,8 +10,13 @@ export const looseComponent = () => {
 }
 
 const render = async (el) => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('looseWinMessage-wrapper');
+
     const message = document.createElement('h1');
-    message.append('YOU LOOSE');
+    message.append('CHEESE WIN! YOU LOOSE!');
+
+    wrapper.append(message);
 
     const button = document.createElement('button');
     button.append('PLAY AGAIN');
@@ -19,5 +24,7 @@ const render = async (el) => {
         playAgain();
     })
 
-    el.append(message, button);
+    wrapper.append(button);
+
+    el.append(wrapper);
 }

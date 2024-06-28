@@ -9,10 +9,10 @@ import {GAME_STATUSES} from "../../core/constants.js";
 import {audioComponent} from "../audio/audioComponent.js";
 
 export const appComponent = () => {
-    console.log('APP CREATED');
     let localState = {prevState: null, cleanupFunctions: []}
 
     const element = document.createElement('div');
+    element.classList.add('main');
 
     const audio = audioComponent();
 
@@ -32,7 +32,6 @@ const render = async (el, localState) => {
     if (localState.prevState === gameStatus) return;
 
     localState.prevState = gameStatus;
-    console.log('APP RENDERING');
 
     localState.cleanupFunctions.forEach(cf => cf());
     localState.cleanupFunctions = [];
@@ -44,7 +43,6 @@ const render = async (el, localState) => {
             const settingsElement = settingsComponent();
             localState.cleanupFunctions.push(settingsElement.cleanup);
             const startElement = startComponent();
-            //localState.cleanupFunctions.push(startElement.cleanup);
 
             el.append(settingsElement.element,startElement.element);
 

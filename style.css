@@ -1,38 +1,72 @@
+#root {
+    position: relative;
+    min-height: 100vh;
+    text-align: center;
+}
 
+#root::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("ui/assets/images/background.png");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.main {
+    margin: 0 auto;
+    max-width: 1280px;
+}
 
 .settings-component {
     display: flex;
+    justify-content: space-between;
 }
 
 .setting-component {
     position: relative;
     display: inline-block;
-    min-width: 200px;
+    min-width: 400px;
+}
+
+.setting-component p {
+    color: #596959;
+    margin: 3px;
+    font-size: 18px;
+    font-weight: 900;
 }
 
 .setting-component__button {
-    background-color: #3498db;
+    background-color: #596959;
     color: white;
-    padding: 10px 20px;
+    width: 180px;
+    padding: 2px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
     font-size: 16px;
+    font-weight: 900;
 }
 
 .setting-component__list {
     display: none;
     position: absolute;
+    width: 180px;
     background-color: white;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    margin-top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .setting-component__field {
-    padding: 10px 20px;
+    padding: 5px 0;
     cursor: pointer;
+    border: 1px solid grey;
 }
 
 .setting-component__list.show {
@@ -44,20 +78,89 @@
     pointer-events: none;
 }
 
-.grid-img {
-    width: 55px;
-    height: 55px;
-}
-
 .results {
-    border: 4px solid black;
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid #88958A;
+    border-radius: 30px;
     padding: 4px;
+    margin: 20px 0;
+    background-color: #E6DFD5;
 }
 
-.grid td{
-    border: 4px solid black;
-    padding: 5px;
+.result-field {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    font-size: 18px;
+    font-weight: 900;
+    color: #596959;
+}
+
+.result-field img {
+    width: 30px;
+    height: 30px;
+}
+
+.result-field span, img {
+    margin: 0 7px;
+}
+
+.table {
+    margin: 0 auto
+}
+
+.grid td {
+    border: 4px solid #88958A;
     margin: 4px;
     width: 60px;
     height: 60px;
+    background-color: #E6DFD5;
+}
+
+.grid-img {
+    width: 45px;
+    height: 45px;
+}
+
+.start-component {
+margin-top: 250px;
+}
+
+.start-component button,
+.win-component button,
+.loose-component button {
+    background-color: #88958A;
+    color: #E6DFD5;
+    font-size: 20px;
+    font-weight: 900;
+    border: 1px solid #E6DFD5;
+    border-radius: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+.win-component, .loose-component {
+    padding-top: 30vh;
+    color: #596959;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.win-component h1, .loose-component h1 {
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+.looseWinMessage-wrapper {
+    display: inline-block;
+    background-color: #E6DFD5;
+    border: 1px solid #88958A;
+    border-radius: 30px;
+    box-sizing: content-box;
+    padding: 20px;
+}
+
+.loose-component {
+    color: #A14A4D;
 }

@@ -22,16 +22,14 @@ const render = async (el) => {
 
     const cheesePoints = await getCheesePoints();
 
-
     const title = document.createElement('span');
-    title.innerText = 'Cheese';
+    title.innerText = 'Cheese:';
+
     const points = document.createElement('span');
     points.innerHTML = cheesePoints;
+
     const img = document.createElement('img');
     img.src = 'ui/assets/images/cheese.png';
-    img.style.width = '30px';
-    img.style.height = '30px';
 
-    el.append(title, points, img)
-
+    el.append(title, points, img);
 }

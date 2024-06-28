@@ -1,15 +1,12 @@
-import {getGridSettings, movePlayer, subscribe, unsubscribe} from "../../../core/state.js";
+import {getGridSettings, movePlayer} from "../../../core/state.js";
 import {cellComponent} from "./cell/CellComponent.js";
 import {MOVING_DIRECTIONS} from "../../../core/constants.js";
 
 export const gridComponent = () => {
 
-    console.log('GRID CREATED');
-
     const localState = {cleanupFunctions: []};
 
     const keyupHandler = (event) => {
-        console.log(event.code)
         switch (event.code) {
             case 'ArrowUp': movePlayer(1, MOVING_DIRECTIONS.UP); break;
             case 'ArrowDown': movePlayer(1, MOVING_DIRECTIONS.DOWN); break;
@@ -24,7 +21,7 @@ export const gridComponent = () => {
 
     document.addEventListener('keyup', keyupHandler);
 
-    const element = document.createElement('table');
+    const element = document.createElement('div');
     element.classList.add('grid');
 
     render(element, localState);
@@ -32,7 +29,6 @@ export const gridComponent = () => {
     return {
         element,
         cleanup: () => {
-            console.log('Grid makes cleanup');
             localState.cleanupFunctions.forEach(cf => cf());
             document.removeEventListener('keyup', keyupHandler);
         }
@@ -41,13 +37,14 @@ export const gridComponent = () => {
 
 const render = async (el, localState) => {
 
-    console.log('GRID RENDER');
     localState.cleanupFunctions.forEach(cf => cf());
     localState.cleanupFunctions = [];
 
     el.innerHTML = '';
 
     const settings = await getGridSettings();
+    const table = document.createElement('table');
+    table.classList.add('table');
 
     for (let x = 0; x < settings.rowsCount; x++) {
         const gridRow = document.createElement('tr');
@@ -58,6 +55,8 @@ const render = async (el, localState) => {
             gridRow.append(cellElement.element);
         }
 
-        el.append(gridRow);
+        table.append(gridRow);
     }
+
+    el.append(table)
 }

@@ -8,7 +8,6 @@ import {
 import {EVENTS} from "../../../core/constants.js";
 
 export const settingComponent = (settings) => {
-    console.log('setting element creating');
 
     const element = document.createElement('div');
     element.classList.add('setting-component')
@@ -32,9 +31,7 @@ const render = async (el, settings) => {
 
     el.innerHTML = '';
 
-    console.log('setting element rendering');
-
-    const title = document.createElement('h4');
+    const title = document.createElement('p');
     title.innerText = settings.title;
     el.append(title);
 
@@ -46,20 +43,19 @@ const render = async (el, settings) => {
             return `${data.rowsCount} x ${data.columnCount}`
         }
         if(settings.title === 'Points to win'){
-            return await getPointsToWin()
+            return await getPointsToWin();
         }
         if(settings.title === 'Points to loose'){
-            return await getPointsToLoose()
+            return await getPointsToLoose();
         }
     }
     button.textContent = await buttonText();
     el.append(button);
 
     const list = document.createElement('div');
-    list.classList.add('setting-component__list')
+    list.classList.add('setting-component__list');
 
     button.addEventListener('click', () => {
-       console.log( 'click on button')
         list.classList.toggle('show');
     });
 

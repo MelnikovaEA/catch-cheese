@@ -1,4 +1,4 @@
-import {playAgain} from "../../../core/state.js";
+import {getWinner, playAgain} from "../../../core/state.js";
 
 export const winComponent = () => {
     const element = document.createElement('div');
@@ -10,8 +10,15 @@ export const winComponent = () => {
 }
 
 const render = async (el) => {
+    const winner = await getWinner();
+
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('looseWinMessage-wrapper');
+
     const message = document.createElement('h1');
-    message.append('YOU WIN!');
+    message.append(`PLAYER ${winner} WIN!`);
+
+    wrapper.append(message);
 
     const button = document.createElement('button');
     button.append('PLAY AGAIN');
@@ -19,5 +26,7 @@ const render = async (el) => {
         playAgain();
     })
 
-    el.append(message, button);
+    wrapper.append(button);
+
+    el.append(wrapper);
 }

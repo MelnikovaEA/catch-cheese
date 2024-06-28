@@ -1,4 +1,4 @@
-import {getCheesePoints, getPlayerPoints, getPlayersCount, subscribe, unsubscribe} from "../../../core/state.js";
+import {getPlayerPoints, subscribe, unsubscribe} from "../../../core/state.js";
 import { EVENTS} from "../../../core/constants.js";
 
 export const resultPlayerComponent = (playerNumber) => {
@@ -23,14 +23,13 @@ const render = async (el, playerNumber) => {
     const playerPoints = await getPlayerPoints(playerNumber);
 
     const title = document.createElement('span');
-    title.innerText = `Player ${playerNumber}`;
+    title.innerText = `Player ${playerNumber}:`;
+
     const points = document.createElement('span');
     points.innerHTML = playerPoints;
+
     const img = document.createElement('img');
     img.src = `ui/assets/images/player-${playerNumber}.png`;
-    img.style.width = '30px';
-    img.style.height = '30px';
 
-    el.append(title, points, img)
-
+    el.append(title, points, img);
 }

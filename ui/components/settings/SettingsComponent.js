@@ -9,11 +9,7 @@ export const settingsComponent = () => {
 
     render(element);
 
-    return {
-        element,
-        cleanup: () => {
-        }
-    };
+    return { element, cleanup: () => {} };
 }
 
 const render = async (el) => {

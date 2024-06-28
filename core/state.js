@@ -2,11 +2,12 @@ import {EVENTS, GAME_STATUSES, MOVING_DIRECTIONS} from "./constants.js";
 
 const _state = {
     game_status: GAME_STATUSES.SETTINGS,
+    winner: null,
     settings: {
         /**
          * in milliseconds
          */
-        googleJumpInterval: 3000,
+        googleJumpInterval: 1000,
         grid: {
             rowsCount: 5,
             columnCount: 5
@@ -15,8 +16,8 @@ const _state = {
         pointsToLoose: 5,
     },
     positions: {
-        cheesePosition: {x: 1, y: 1},
-        playersPosition: [{x: 2, y: 2}, {x: 3, y: 3}]
+        cheesePosition: {x: 0, y: 0},
+        playersPosition: [{x: 0, y: 0}, {x: 0, y: 0}]
     },
     points: {
         cheese: 0,
@@ -86,7 +87,7 @@ const _jumpCheese = () => {
 let cheeseJumpInterval;
 
 const _checkValidPosition = (position) => {
-    return (position.x >= 0 && position.x < _state.settings.grid.columnCount) && (position.y >= 0 && position.y < _state.settings.grid.rowsCount);
+    return (position.x >= 0 && position.x < _state.settings.grid.rowsCount) && (position.y >= 0 && position.y < _state.settings.grid.columnCount);
 }
 
 const _checkPositionMatchesWithPlayer1Position = (position) => {
@@ -109,8 +110,10 @@ const _catchCheese = (playerNumber) => {
     _notifyObservers(EVENTS.CHEESE_CAUGHT);
 
     if (_state.points.players[playerIndex] === _state.settings.pointsToWin) {
+        _state.winner = playerNumber;
         _state.game_status = GAME_STATUSES.WIN;
         _notifyObservers(EVENTS.STATUS_CHANGED);
+        _notifyObservers(EVENTS.PLAYER_WIN);
         clearInterval(cheeseJumpInterval);
     } else {
         const prevPosition = _state.positions.cheesePosition;
@@ -122,12 +125,12 @@ const _catchCheese = (playerNumber) => {
     }
 }
 
-
 //INTERFACE
-
 //GETTERS
 
 export const getGameStatus = async () => _state.game_status;
+
+export const getWinner = async () => _state.winner;
 
 export const getCheesePoints = async () => _state.points.cheese;
 
@@ -178,7 +181,6 @@ export const setSettings = async (title, value) => {
             const options = value.match(/\d+/g);
             newSize.rowsCount = options[0];
             newSize.columnCount = options[1];
-            console.log(newSize);
             _state.settings.grid = {...newSize};
             break;
         case 'Points to win':
@@ -187,13 +189,15 @@ export const setSettings = async (title, value) => {
         case 'Points to loose':
             _state.settings.pointsToLoose = value;
             break;
-        default: return;
+        default:
+            return;
     }
 }
 
 export const start = async () => {
     if (_state.game_status !== GAME_STATUSES.SETTINGS) throw new Error('Incorrect transition');
 
+    _state.winner = null;
     _state.points.cheese = 0;
     _state.points.players = [0, 0];
 
@@ -221,6 +225,7 @@ export const start = async () => {
             clearInterval(cheeseJumpInterval);
             _state.game_status = GAME_STATUSES.LOOSE;
             _notifyObservers(EVENTS.STATUS_CHANGED);
+            _notifyObservers(EVENTS.CHEESE_WIN);
         }
 
     }, _state.settings.googleJumpInterval);
@@ -277,8 +282,6 @@ export const movePlayer = async (playerNumber, direction) => {
         prevPosition: prevPosition,
         position: newPosition
     });
-
-    console.log(`player ${playerNumber} moved! newPosition is X:${newPosition.x}, Y:${newPosition.y}`)
 }
 
 

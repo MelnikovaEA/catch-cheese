@@ -16,5 +16,5 @@ const render = async (el) => {
         start();
     })
 
-    el.append(button)
+    el.append(button);
 }

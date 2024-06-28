@@ -5,7 +5,6 @@ import {resultPlayerComponent} from "./resultPlayerComponent.js";
 
 export const resultPanelComponent = () => {
 
-    console.log('POINTS CREATED')
     const element = document.createElement('div');
     element.classList.add('results');
 
@@ -21,13 +20,11 @@ export const resultPanelComponent = () => {
 }
 
 const render = async (el) => {
-    console.log('POINTS RENDER')
     const playersCount = await getPlayersCount();
     el.innerHTML = '';
 
     el.append(resultCheeseComponent().element);
     for (let i = 1; i <= playersCount; i++) {
-        console.log(playersCount)
         el.append(resultPlayerComponent(i).element);
     }
 }

@@ -5,7 +5,7 @@ import {EVENTS} from "../../../../core/constants.js";
 
 export const cellComponent = (x, y) => {
 
-    const localState = {renderingVersion: 0}
+    const localState = {renderingVersion: 0};
 
     const element = document.createElement('td');
 
@@ -13,12 +13,10 @@ export const cellComponent = (x, y) => {
         if(e.name !== EVENTS.CHEESE_JUMPED && e.name !== EVENTS.PLAYER1_MOVED && e.name !== EVENTS.PLAYER2_MOVED) return;
 
         if(e.payload.prevPosition.x === x && e.payload.prevPosition.y === y){
-            element.style.backgroundColor = 'red';
             render(element, x, y, localState);
         }
 
         if(e.payload.position.x === x && e.payload.position.y === y){
-            element.style.backgroundColor = 'blue';
             render(element, x, y, localState);
         }
     }
@@ -57,5 +55,4 @@ const render = async (el, x, y, localState) => {
     if (x === player2Position.x && y === player2Position.y) {
         el.append(playerComponent(2).element);
     }
-
 }
