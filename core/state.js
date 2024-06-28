@@ -7,7 +7,7 @@ const _state = {
         /**
          * in milliseconds
          */
-        googleJumpInterval: 1000,
+        googleJumpInterval: 3000,
         grid: {
             rowsCount: 5,
             columnCount: 5
